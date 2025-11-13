@@ -8,7 +8,7 @@
   background-color: var(--orange-fondo);
 
   --orange: #f5842b;
-  --dark-orange:#fc6d00ff;
+  --dark-orange: #fc6d00ff;
   --blue: #66c5bd;
   --dark-blue: #29afa4ff;
   --orange-background: #f1d5b6;
@@ -32,7 +32,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   overflow-x: hidden; /* Elimina scroll horitzontal */
@@ -47,6 +48,3 @@ html, body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
-
-

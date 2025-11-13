@@ -12,26 +12,17 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
-// import { yellow } from '@mui/material/colors';
+import {colors} from '../../colors.jsx'
+import { useNavigate } from "react-router-dom";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const colors = {
-  orange: "#f5842b",
-  darkOrange: "#fc6d00ff",
-  backgroundOrange: "#f1d5b6",
-  blue: "#66c5bd",
-  darkBlue: "#29afa4ff",
-  yellow: "#f6ce5b",
-  purple: "#bcbefa",
-  lightColor: "#f8f9fa",
-  black: "#000000",
-};
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -86,16 +77,17 @@ function ResponsiveAppBar() {
               fontSize: { xs: "2rem", md: "2.5rem" }, // Mides més grans i simples
               cursor: "pointer",
              "&:hover": {
-                color: colors.darkBlue,
-              },
+              transform: "scale(1.1) rotate(10deg)",
+              transition: "all 0.3s ease-in-out",
+            },
             }}
           />
           <Typography
+          onClick={()=> navigate('/')}
             className="animation-nav"
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               m: 2,
               display: { xs: "none", md: "flex" },
@@ -144,18 +136,37 @@ function ResponsiveAppBar() {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: "block", md: "none" } }}
+              sx={{ display: { xs: "block", md: "none" }}}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={handleCloseNavMenu} >
                   <Typography
-                    className="menu-item-text"
-                    sx={{ textAlign: "center" }}
+                    // className="menu-item-text"
+                    sx={{ textAlign: "center", }}
                   >
                     {page}
                   </Typography>
                 </MenuItem>
               ))}
+              <Button
+            variant="contained"
+            onClick={() => navigate('/formulari-dialog')}
+            sx={{
+              bgcolor: colors.blue,
+              "&:hover": {
+                bgcolor: colors.darkBlue,
+                transform: "translateY(-2px)",
+                boxShadow: "0 4px 12px rgba(102, 197, 189, 0.3)",
+              },
+              borderRadius: 5,
+              px: 1,
+              fontSize: "1.1rem",
+              m: 1,
+              transition: "all 0.3s ease-in-out",
+            }}
+          >
+            Registre ràpid
+          </Button>
             </Menu>
           </Box>
 
@@ -187,7 +198,7 @@ function ResponsiveAppBar() {
               letterSpacing: ".3rem",
               color: colors.blue,
               textDecoration: "none",
-              fontSize: { xs: "1.4rem", sm: "1.6rem" }, // Mides més grans
+              fontSize: { xs: "2rem", sm: "2.2rem" }, // Mides més grans
               "&:hover": {
                 color: colors.darkBlue,
               },
@@ -196,6 +207,8 @@ function ResponsiveAppBar() {
             AdoptApp
           </Typography>
 
+
+            {/* això quan tinguem el django fem q només es vegi si has entrat */}
           <Box
             sx={{
               flexGrow: 1,
@@ -221,6 +234,28 @@ function ResponsiveAppBar() {
                 {page}
               </Button>
             ))}
+          </Box>
+          <Box>
+             <Button
+            variant="contained"
+            onClick={() => navigate('/formulari-dialog')}
+            sx={{
+              display: { xs: "none", md: "flex" },
+              bgcolor: colors.blue,
+              "&:hover": {
+                bgcolor: colors.darkBlue,
+                transform: "translateY(-2px)",
+                boxShadow: "0 4px 12px rgba(102, 197, 189, 0.3)",
+              },
+              borderRadius: 5,
+              px: 4,
+              fontSize: "1.1rem",
+              mr: 7,
+              transition: "all 0.3s ease-in-out",
+            }}
+          >
+            Registre ràpid
+          </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

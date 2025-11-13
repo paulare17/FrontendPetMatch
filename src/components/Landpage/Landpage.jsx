@@ -5,21 +5,12 @@ import gatImatgeInfEsq from "../../assets/gat-cantonada.png"; // ✅ Import la i
 import gatImatgeSupDreta from "../../assets/gat-superior.png";
 import gosImatgeCentre from "../../assets/gos-baix.png";
 import './petjades.css'
+import {colors} from '../../colors.jsx'
+import { useNavigate } from "react-router-dom";
 
-
-const colors = {
-  orange: "#f5842b",
-  darkOrange: "#fc6d00ff",
-  backgroundOrange: "#f1d5b6",
-  blue: "#66c5bd",
-  darkBlue: "#29afa4ff",
-  yellow: "#f6ce5b",
-  purple: "#bcbefa",
-  lightColor: "#f8f9fa",
-  black: "#000000",
-};
 
 export default function Landpage() {
+  const navigate = useNavigate()
   return (
     <Box
       sx={{
@@ -39,7 +30,7 @@ export default function Landpage() {
     >
 
 <div className="petjades-container">
-          <PetsIcon className="petjada petjada-1" />
+        <PetsIcon className="petjada petjada-1" />
         <PetsIcon className="petjada petjada-2" />
         <PetsIcon className="petjada petjada-3" />
         <PetsIcon className="petjada petjada-4" />
@@ -72,8 +63,9 @@ export default function Landpage() {
       >
         <PetsIcon
           sx={{
+            display: { xs: "none", sm: "flex" },
             color: colors.orange,
-            fontSize: { xs: 60, sm: 80, md: 100 },
+            fontSize: { xs: 80, sm: 100, md: 120 },
             cursor: "pointer",
             "&:hover": {
               transform: "scale(1.1) rotate(10deg)",
@@ -102,6 +94,7 @@ export default function Landpage() {
         sx={{ zIndex: 2 }}
       >
         <Button
+        onClick={()=> navigate('/formulari-acces')}
           variant="contained"
           sx={{
             bgcolor: colors.blue,
