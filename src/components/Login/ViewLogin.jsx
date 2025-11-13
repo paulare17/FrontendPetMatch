@@ -12,9 +12,11 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff, Email, Lock } from '@mui/icons-material';
 import {colors } from '../../colors.jsx';
+import { useNavigate } from "react-router-dom";
 
 
 export default function ViewLogin() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -65,11 +67,11 @@ export default function ViewLogin() {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
+        height: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 2,
+        // padding: 2,
         bgcolor: colors.backgroundOrange
       }}
     >
@@ -185,7 +187,18 @@ export default function ViewLogin() {
                   size="small"
                   sx={{ textTransform: 'none', p: 0, minWidth: 'auto' }}
                 >
-                  Recuperar-la
+                  Recupera-la
+                </Button>
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                No tens compte?{' '}
+                <Button 
+                  onClick={()=> navigate('/formulari-dialog')}
+                  variant="text" 
+                  size="small"
+                  sx={{ textTransform: 'none', p: 0, minWidth: 'auto' }}
+                >
+                  Crea'l
                 </Button>
               </Typography>
             </Box>

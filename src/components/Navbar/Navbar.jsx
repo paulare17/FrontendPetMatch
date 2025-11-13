@@ -47,6 +47,7 @@ function ResponsiveAppBar() {
         minHeight: { xs: 80, md: 90 },
         width: "100%",
         boxSizing: "border-box",
+    
       }}
     >
       <Container
@@ -56,6 +57,7 @@ function ResponsiveAppBar() {
           maxWidth: "none !important",
           padding: "0 !important", // Elimina padding del container
           margin: "0 !important", // Elimina margin del container
+    
         }}
       >
         <Toolbar
@@ -68,43 +70,50 @@ function ResponsiveAppBar() {
             px: { xs: 2, md: 4 }, // Simplificat: només 2 breakpoints
           }}
         >
+           {/* Secció esquerra: Logo + Títol */}
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+
           <PetsIcon
-            className="animation-nav"
+           onClick={()=> navigate('/')}
+           className="animation-nav"
             sx={{
+              mr:0.5, 
+              mb: 1,
               display: { xs: "none", md: "flex" },
-              mr: 1,
-              color: colors.blue,
+              color: colors.yellow,
               fontSize: { xs: "2rem", md: "2.5rem" }, // Mides més grans i simples
               cursor: "pointer",
              "&:hover": {
               transform: "scale(1.1) rotate(10deg)",
               transition: "all 0.3s ease-in-out",
+              color: colors.blue,
             },
             }}
           />
           <Typography
           onClick={()=> navigate('/')}
-            className="animation-nav"
-            variant="h6"
+          className="animation-nav"
+          variant="h6"
             noWrap
             component="a"
+            
             sx={{
-              m: 2,
+              mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "Rubik Bubbles",
               fontWeight: 700,
-              color: colors.blue,
+              color: colors.yellow,
               textDecoration: "none",
-              fontSize: { xs: "1.8rem", md: "2.2rem" }, // Mides més grans i simples
+              fontSize: { xs: "1.8rem", md: "2.5rem" }, // Mides més grans i simples
               "&:hover": {
-                transform: "scale(1.2)",
-                transition: "transform 0.3s ease-in-out",
-                color: colors.darkBlue,
+                cursor: "pointer",
               },
             }}
-          >
+            >
             AdoptApp
           </Typography>
+            </Box>
+  {/* Secció centre: Menú hamburguesa (mòbil) */}
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -142,7 +151,7 @@ function ResponsiveAppBar() {
                 <MenuItem key={page} onClick={handleCloseNavMenu} >
                   <Typography
                     // className="menu-item-text"
-                    sx={{ textAlign: "center", }}
+                    sx={{ textAlign: "center",  }}
                   >
                     {page}
                   </Typography>
@@ -171,6 +180,9 @@ function ResponsiveAppBar() {
           </Box>
 
           {/* títol per a mòbil */}
+          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
+
+
           <PetsIcon
             sx={{
               display: { xs: "flex", md: "none" },
@@ -207,13 +219,15 @@ function ResponsiveAppBar() {
             AdoptApp
           </Typography>
 
+            </Box>
+ {/* Secció centre-dreta: Menú navegació (desktop) */}
 
-            {/* això quan tinguem el django fem q només es vegi si has entrat */}
           <Box
             sx={{
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
               alignItems: "center",
+              justifyContent: "center", // Centra els elements del menú
             }}
           >
             {pages.map((page) => (
@@ -222,7 +236,8 @@ function ResponsiveAppBar() {
                 onClick={handleCloseNavMenu}
                 sx={{
                   my: 2,
-                  color: colors.blue,
+                  mx:1,
+                 color: colors.purple,
                   display: "flex",
                   alignItems: "center",
                   fontSize: { xs: "1.2rem", md: "1.5rem" }, // Simplificat i més gran
@@ -235,7 +250,8 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-          <Box>
+           {/* Secció dreta: Botó registre + Avatar */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
              <Button
             variant="contained"
             onClick={() => navigate('/formulari-dialog')}
@@ -253,11 +269,14 @@ function ResponsiveAppBar() {
               mr: 7,
               transition: "all 0.3s ease-in-out",
             }}
-          >
+            >
             Registre ràpid
           </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
+
+            {/* això quan tinguem el django fem q només es vegi si has entrat */}
+                {/* Menu del avatar */}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />

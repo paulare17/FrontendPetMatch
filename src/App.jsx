@@ -7,7 +7,7 @@ import Landpage from "./components/Landpage/Landpage";
 import FormRol from "./components/Forms/FormRol";
 import FormDialog from "./components/Forms/FormDialog";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ViewLogin from "./components/Auth/ViewLogin";
+import ViewLogin from "./components/Login/ViewLogin";
 
 function App() {
   // const [count, setCount] = useState(0)

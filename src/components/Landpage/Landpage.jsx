@@ -60,9 +60,11 @@ export default function Landpage() {
         alignItems="center"
         gap={{ xs: 0.5, sm: 1, md: 1.5 }}
         sx={{ zIndex: 2 }}
+  
       >
         <PetsIcon
           sx={{
+            mb: 2,
             display: { xs: "none", sm: "flex" },
             color: colors.orange,
             fontSize: { xs: 80, sm: 100, md: 120 },
@@ -70,6 +72,7 @@ export default function Landpage() {
             "&:hover": {
               transform: "scale(1.1) rotate(10deg)",
               transition: "all 0.3s ease-in-out",
+              color: colors.blue,
             },
           }}
         />
