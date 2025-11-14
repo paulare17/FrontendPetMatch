@@ -145,7 +145,6 @@ export default function FormDialog() {
               fontSize: "0.7rem",
               transition: "all 0.3s ease-in-out",
             }}
-            onClick={handleClose}
           >
             Sóc una protectora
           </Button>

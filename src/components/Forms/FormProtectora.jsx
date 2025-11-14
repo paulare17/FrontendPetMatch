@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -17,109 +17,121 @@ import {
   FormGroup,
   Divider,
   Grid,
-} from '@mui/material';
-import { 
-  Business, 
-  Email, 
-  Phone, 
-  LocationOn, 
-  Language, 
+} from "@mui/material";
+import {
+  Business,
+  Email,
+  Phone,
+  LocationOn,
+  Language,
   Schedule,
   Pets,
   Description,
   ContactPhone,
-  Group
-} from '@mui/icons-material';
-import { colors } from '../../colors.jsx';
-import { useNavigate } from 'react-router-dom';
+  Group,
+} from "@mui/icons-material";
+import { colors } from "../../colors.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function FormProtectora() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     // Informació bàsica
-    nomProtectora: '',
-    email: '',
-    telefon: '',
-    telefonEmergencia: '',
-    webSite: '',
-    
+    nomProtectora: "",
+    email: "",
+    telefon: "",
+    telefonEmergencia: "",
+    webSite: "",
+
     // Adreça
-    carrer: '',
-    ciutat: '',
-    codiPostal: '',
-    provincia: 'Barcelona',
-    
+    carrer: "",
+    ciutat: "",
+    codiPostal: "",
+    provincia: "Barcelona",
+
     // Horaris
-    horariApertura: '',
-    horariTancament: '',
+    horariApertura: "",
+    horariTancament: "",
     diesOberts: [],
-    
+
     // Informació específica
     tipusAnimals: [],
-    capacitatMaxima: '',
-    anyFundacio: '',
-    nucleoZoologico: '',
-    
+    capacitatMaxima: "",
+    anyFundacio: "",
+    nucleoZoologico: "",
+
     // Descripció i serveis
-    descripcio: '',
+    descripcio: "",
     serveisOferts: [],
-    
+
     // Requisits adopció
-    requisitoAdopcio: '',
-    procesAdopcio: '',
-    
+    requisitoAdopcio: "",
+    procesAdopcio: "",
+
     // Xarxes socials
-    facebook: '',
-    instagram: '',
-    twitter: '',
+    facebook: "",
+    instagram: "",
+    twitter: "",
   });
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const dies = ['Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte', 'Diumenge'];
-  const provincies = ['Barcelona', 'Girona', 'Lleida', 'Tarragona'];
-  const tipusAnimalsOptions = ['Gats', 'Gossos', 'Altres'];
+  const dies = [
+    "Dilluns",
+    "Dimarts",
+    "Dimecres",
+    "Dijous",
+    "Divendres",
+    "Dissabte",
+    "Diumenge",
+  ];
+  const provincies = ["Barcelona", "Girona", "Lleida", "Tarragona"];
+  const tipusAnimalsOptions = ["Gats", "Gossos", "Altres"];
   const serveisOptions = [
-    'Adopció', 
-    'Acollida temporal', 
-    'Veterinari', 
-    'Educació', 
-    'Rehabilitació',
-    'Transport',
-    'Castració/Esterilització'
+    "Adopció",
+    "Acollida temporal",
+    "Veterinari",
+    "Educació",
+    "Rehabilitació",
+    "Transport",
+    "Castració/Esterilització",
   ];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
   };
 
   const handleCheckboxChange = (name, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: prev[name].includes(value) 
-        ? prev[name].filter(item => item !== value)
-        : [...prev[name], value]
+      [name]: prev[name].includes(value)
+        ? prev[name].filter((item) => item !== value)
+        : [...prev[name], value],
     }));
   };
 
   const validateForm = () => {
     const newErrors = {};
-    
-    if (!formData.nomProtectora.trim()) newErrors.nomProtectora = 'Nom de la protectora obligatori';
-    if (!formData.email.trim()) newErrors.email = 'Email obligatori';
-    if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Format d\'email invàlid';
-    if (!formData.telefon.trim()) newErrors.telefon = 'Telèfon obligatori';
-    if (!formData.carrer.trim()) newErrors.carrer = 'Carrer obligatori';
-    if (!formData.ciutat.trim()) newErrors.ciutat = 'Ciutat obligatòria';
-    if (!formData.codiPostal.trim()) newErrors.codiPostal = 'Codi postal obligatori';
-    if (!formData.descripcio.trim()) newErrors.descripcio = 'Descripció obligatòria';
-    if (formData.tipusAnimals.length === 0) newErrors.tipusAnimals = 'Selecciona almenys un tipus d\'animal';
+
+    if (!formData.nomProtectora.trim())
+      newErrors.nomProtectora = "Nom de la protectora obligatori";
+    if (!formData.email.trim()) newErrors.email = "Email obligatori";
+    if (!/\S+@\S+\.\S+/.test(formData.email))
+      newErrors.email = "Format d'email invàlid";
+    if (!formData.telefon.trim()) newErrors.telefon = "Telèfon obligatori";
+    if (!formData.carrer.trim()) newErrors.carrer = "Carrer obligatori";
+    if (!formData.ciutat.trim()) newErrors.ciutat = "Ciutat obligatòria";
+    if (!formData.codiPostal.trim())
+      newErrors.codiPostal = "Codi postal obligatori";
+    if (!formData.descripcio.trim())
+      newErrors.descripcio = "Descripció obligatòria";
+    if (formData.tipusAnimals.length === 0)
+      newErrors.tipusAnimals = "Selecciona almenys un tipus d'animal";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -136,74 +148,76 @@ export default function FormProtectora() {
 
     try {
       // Simulem l'enviament
-      console.log('Dades de la protectora:', formData);
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      alert('Perfil de protectora creat correctament!');
-      navigate('/');
+      console.log("Dades de la protectora:", formData);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      alert("Perfil de protectora creat correctament!");
+      navigate("/");
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error en crear el perfil. Intenta-ho de nou.');
+      console.error("Error:", error);
+      alert("Error en crear el perfil. Intenta-ho de nou.");
     } finally {
       setLoading(false);
     }
   };
 
   const handleCancel = () => {
-    navigate('/');
+    navigate("/formulari-dialog");
   };
-
-
 
   return (
     <Box
       sx={{
         backgroundColor: colors.backgroundOrange,
         padding: 3,
-        display: 'flex',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        overflowY: 'auto', // Permet scroll vertical
+        display: "flex",
+        justifyContent: "center",
+        minHeight: "100vh",
+        overflowY: "auto", // Permet scroll vertical
       }}
     >
-      <Card sx={{ height: '100%', width: '80%', borderRadius: 5 }}>
+      <Card sx={{ height: "100%", width: "80%", borderRadius: 5 }}>
         <CardContent sx={{ p: 4 }}>
-          <Typography 
-            variant="h4" 
-            component="h1" 
-            gutterBottom 
+          <Typography
+            variant="h4"
+            component="h1"
+            gutterBottom
             align="center"
-            sx={{ 
-              mb: 3, 
-              color: colors.blue, 
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 1
+            sx={{
+              mb: 3,
+              color: colors.blue,
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
             }}
           >
             <Pets />
             Perfil de Protectora
           </Typography>
 
-          <Typography 
-            variant="body1" 
-            align="center" 
-            sx={{ mb: 4, color: 'text.secondary', lineHeight: 1.6 }}
+          <Typography
+            variant="body1"
+            align="center"
+            sx={{ mb: 4, color: "text.secondary", lineHeight: 1.6 }}
           >
-            Completa la informació de la teva protectora per poder oferir els teus serveis d'adopció
+            Completa la informació de la teva protectora per poder oferir els
+            teus serveis d'adopció
           </Typography>
 
           <Box component="form" onSubmit={handleSubmit}>
             {/* Informació Bàsica */}
-            <Typography variant="h6" sx={{ mb: 2, color: colors.blue, fontWeight: 'bold' }}>
-              <Business sx={{ mr: 1, verticalAlign: 'middle' }} />
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
+            >
+              <Business sx={{ mr: 1, verticalAlign: "middle" }} />
               Informació Bàsica
             </Typography>
 
             <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid size={ {xs:12, sm: 12}}>
+              <Grid size={{ xs: 12, sm: 12 }}>
                 <TextField
                   required
                   fullWidth
@@ -223,7 +237,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 3}}>
+              <Grid size={{ xs: 12, sm: 3 }}>
                 <TextField
                   required
                   fullWidth
@@ -244,7 +258,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 3}}>
+              <Grid size={{ xs: 12, sm: 3 }}>
                 <TextField
                   required
                   fullWidth
@@ -264,7 +278,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 3}}>
+              <Grid size={{ xs: 12, sm: 3 }}>
                 <TextField
                   fullWidth
                   name="telefonEmergencia"
@@ -281,7 +295,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 3}}>
+              <Grid size={{ xs: 12, sm: 3 }}>
                 <TextField
                   fullWidth
                   name="webSite"
@@ -302,13 +316,16 @@ export default function FormProtectora() {
             <Divider sx={{ my: 3 }} />
 
             {/* Adreça */}
-            <Typography variant="h6" sx={{ mb: 2, color: colors.blue, fontWeight: 'bold' }}>
-              <LocationOn sx={{ mr: 1, verticalAlign: 'middle' }} />
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
+            >
+              <LocationOn sx={{ mr: 1, verticalAlign: "middle" }} />
               Ubicació
             </Typography>
 
             <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid size={{xs: 12, sm: 3}}>
+              <Grid size={{ xs: 12, sm: 3 }}>
                 <TextField
                   required
                   fullWidth
@@ -321,7 +338,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 3}}>
+              <Grid size={{ xs: 12, sm: 3 }}>
                 <TextField
                   required
                   fullWidth
@@ -334,7 +351,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 3}}>
+              <Grid size={{ xs: 12, sm: 3 }}>
                 <TextField
                   required
                   fullWidth
@@ -347,7 +364,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 3}}>
+              <Grid size={{ xs: 12, sm: 3 }}>
                 <FormControl fullWidth>
                   <InputLabel>Província</InputLabel>
                   <Select
@@ -369,13 +386,16 @@ export default function FormProtectora() {
             <Divider sx={{ my: 3 }} />
 
             {/* Horaris */}
-            <Typography variant="h6" sx={{ mb: 2, color: colors.blue, fontWeight: 'bold' }}>
-              <Schedule sx={{ mr: 1, verticalAlign: 'middle' }} />
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
+            >
+              <Schedule sx={{ mr: 1, verticalAlign: "middle" }} />
               Horaris d'Atenció
             </Typography>
 
             <Grid container spacing={3} sx={{ mb: 3 }}>
-              <Grid size={{xs: 12, sm: 3}}>
+              <Grid size={{ xs: 12, sm: 3 }}>
                 <TextField
                   fullWidth
                   name="horariApertura"
@@ -387,7 +407,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 3}}>
+              <Grid size={{ xs: 12, sm: 3 }}>
                 <TextField
                   fullWidth
                   name="horariTancament"
@@ -410,7 +430,7 @@ export default function FormProtectora() {
                   control={
                     <Checkbox
                       checked={formData.diesOberts.includes(dia)}
-                      onChange={() => handleCheckboxChange('diesOberts', dia)}
+                      onChange={() => handleCheckboxChange("diesOberts", dia)}
                       sx={{ color: colors.blue }}
                     />
                   }
@@ -422,8 +442,11 @@ export default function FormProtectora() {
             <Divider sx={{ my: 3 }} />
 
             {/* Informació Específica */}
-            <Typography variant="h6" sx={{ mb: 2, color: colors.blue, fontWeight: 'bold' }}>
-              <Pets sx={{ mr: 1, verticalAlign: 'middle' }} />
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
+            >
+              <Pets sx={{ mr: 1, verticalAlign: "middle" }} />
               Informació dels Animals
             </Typography>
 
@@ -437,7 +460,9 @@ export default function FormProtectora() {
                   control={
                     <Checkbox
                       checked={formData.tipusAnimals.includes(tipus)}
-                      onChange={() => handleCheckboxChange('tipusAnimals', tipus)}
+                      onChange={() =>
+                        handleCheckboxChange("tipusAnimals", tipus)
+                      }
                       sx={{ color: colors.blue }}
                     />
                   }
@@ -446,13 +471,17 @@ export default function FormProtectora() {
               ))}
             </FormGroup>
             {errors.tipusAnimals && (
-              <Typography color="error" variant="caption" sx={{ mb: 2, display: 'block' }}>
+              <Typography
+                color="error"
+                variant="caption"
+                sx={{ mb: 2, display: "block" }}
+              >
                 {errors.tipusAnimals}
               </Typography>
             )}
 
             <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid size={{xs: 12, sm: 4}}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <TextField
                   fullWidth
                   name="capacitatMaxima"
@@ -463,7 +492,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 4}}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <TextField
                   fullWidth
                   name="anyFundacio"
@@ -474,7 +503,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 4}}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <TextField
                   fullWidth
                   name="numeroRegistre"
@@ -488,8 +517,11 @@ export default function FormProtectora() {
             <Divider sx={{ my: 3 }} />
 
             {/* Descripció i Serveis */}
-            <Typography variant="h6" sx={{ mb: 2, color: colors.blue, fontWeight: 'bold' }}>
-              <Description sx={{ mr: 1, verticalAlign: 'middle' }} />
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
+            >
+              <Description sx={{ mr: 1, verticalAlign: "middle" }} />
               Descripció i Serveis
             </Typography>
 
@@ -503,7 +535,10 @@ export default function FormProtectora() {
               value={formData.descripcio}
               onChange={handleInputChange}
               error={!!errors.descripcio}
-              helperText={errors.descripcio || "Explica la història, missió i valors de la protectora"}
+              helperText={
+                errors.descripcio ||
+                "Explica la història, missió i valors de la protectora"
+              }
               sx={{ mb: 3 }}
             />
 
@@ -517,7 +552,9 @@ export default function FormProtectora() {
                   control={
                     <Checkbox
                       checked={formData.serveisOferts.includes(servei)}
-                      onChange={() => handleCheckboxChange('serveisOferts', servei)}
+                      onChange={() =>
+                        handleCheckboxChange("serveisOferts", servei)
+                      }
                       sx={{ color: colors.blue }}
                     />
                   }
@@ -527,7 +564,7 @@ export default function FormProtectora() {
             </FormGroup>
 
             <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid size={{xs: 12, sm: 6}}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   fullWidth
                   multiline
@@ -540,7 +577,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 6}}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   fullWidth
                   multiline
@@ -557,13 +594,16 @@ export default function FormProtectora() {
             <Divider sx={{ my: 3 }} />
 
             {/* Xarxes Socials */}
-            <Typography variant="h6" sx={{ mb: 2, color: colors.blue, fontWeight: 'bold' }}>
-              <Group sx={{ mr: 1, verticalAlign: 'middle' }} />
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
+            >
+              <Group sx={{ mr: 1, verticalAlign: "middle" }} />
               Xarxes Socials
             </Typography>
 
             <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid size={{xs: 12, sm: 4}}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <TextField
                   fullWidth
                   name="facebook"
@@ -574,7 +614,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 4}}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <TextField
                   fullWidth
                   name="instagram"
@@ -585,7 +625,7 @@ export default function FormProtectora() {
                 />
               </Grid>
 
-              <Grid size={{xs: 12, sm: 4}}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <TextField
                   fullWidth
                   name="twitter"
@@ -598,16 +638,19 @@ export default function FormProtectora() {
             </Grid>
 
             {/* Botons d'acció */}
-            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mt: 4 }}>
+            <Box
+              sx={{ display: "flex", gap: 2, justifyContent: "center", mt: 4 }}
+            >
               <Button
-                variant="outlined"
+                variant="container"
                 onClick={handleCancel}
                 sx={{
-                  borderColor: colors.orange,
-                  color: colors.orange,
+                    color: 'white',
+                  bgcolor: colors.orange,
                   "&:hover": {
-                    borderColor: colors.darkOrange,
-                    backgroundColor: `${colors.orange}10`,
+                    bgcolor: colors.darkOrange,
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 4px 12px rgba(245, 132, 43, 0.3)",
                   },
                   borderRadius: 5,
                   px: 4,
@@ -637,7 +680,7 @@ export default function FormProtectora() {
                   transition: "all 0.3s ease-in-out",
                 }}
               >
-                {loading ? 'Creant perfil...' : 'Crear Perfil de Protectora'}
+                {loading ? "Creant perfil..." : "Crear Perfil de Protectora"}
               </Button>
             </Box>
           </Box>
