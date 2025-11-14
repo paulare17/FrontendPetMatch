@@ -15,8 +15,8 @@ import PetsIcon from "@mui/icons-material/Pets";
 import {colors} from '../../colors.jsx'
 import { useNavigate } from "react-router-dom";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = ["Sobre nosaltres", "Perduts", "Contacte"];
+const settings = ["Perfil", "Inici", "Sortir"];
 
 
 function ResponsiveAppBar() {
@@ -113,7 +113,9 @@ function ResponsiveAppBar() {
             AdoptApp
           </Typography>
             </Box>
-  {/* Secció centre: Menú hamburguesa (mòbil) */}
+
+
+  {/* Menú hamburguesa (mòbil) */}
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -157,39 +159,28 @@ function ResponsiveAppBar() {
                   </Typography>
                 </MenuItem>
               ))}
-              <Button
-            variant="contained"
-            onClick={() => navigate('/formulari-dialog')}
-            sx={{
-              bgcolor: colors.blue,
-              "&:hover": {
-                bgcolor: colors.darkBlue,
-                transform: "translateY(-2px)",
-                boxShadow: "0 4px 12px rgba(102, 197, 189, 0.3)",
-              },
-              borderRadius: 5,
-              px: 1,
-              fontSize: "1.1rem",
-              m: 1,
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-            Registre ràpid
-          </Button>
+              
             </Menu>
           </Box>
 
           {/* títol per a mòbil */}
-          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
+          <Box sx={{ display: { xs: "flex", md: "none" }, 
+  alignItems: "center", 
+  justifyContent: "center",
+  flexGrow: 1, 
+  position: "absolute", 
+  left: "50%",
+  transform: "translateX(-50%)", 
+  }}>
 
 
           <PetsIcon
             sx={{
               display: { xs: "flex", md: "none" },
               mr: 1,
-              color: colors.blue, // Canviat a blau per consistència
+              color: colors.yellow, 
               cursor: "pointer",
-              fontSize: { xs: "1.8rem", sm: "2rem" }, // Mides més grans
+              fontSize: { xs: "1.8rem", sm: "2rem" },
               "&:hover": {
                 transform: "scale(1.2)",
                 transition: "transform 0.3s ease-in-out",
@@ -208,26 +199,23 @@ function ResponsiveAppBar() {
               fontFamily: "Rubik Bubbles",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: colors.blue,
+              color: colors.yellow,
               textDecoration: "none",
-              fontSize: { xs: "2rem", sm: "2.2rem" }, // Mides més grans
-              "&:hover": {
-                color: colors.darkBlue,
-              },
+              fontSize: { xs: "2rem", sm: "2.2rem" },
             }}
           >
             AdoptApp
           </Typography>
 
             </Box>
- {/* Secció centre-dreta: Menú navegació (desktop) */}
+ {/*  pages (s'han de modificar) */}
 
           <Box
             sx={{
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
               alignItems: "center",
-              justifyContent: "center", // Centra els elements del menú
+              justifyContent: "space-align", 
             }}
           >
             {pages.map((page) => (
@@ -240,7 +228,7 @@ function ResponsiveAppBar() {
                  color: colors.purple,
                   display: "flex",
                   alignItems: "center",
-                  fontSize: { xs: "1.2rem", md: "1.5rem" }, // Simplificat i més gran
+                  fontSize: { xs: "1.2rem", md: "1.5rem" }, 
                   "&:hover": {
                     color: colors.darkBlue,
                   },
@@ -252,26 +240,6 @@ function ResponsiveAppBar() {
           </Box>
            {/* Secció dreta: Botó registre + Avatar */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-             <Button
-            variant="contained"
-            onClick={() => navigate('/formulari-dialog')}
-            sx={{
-              display: { xs: "none", md: "flex" },
-              bgcolor: colors.blue,
-              "&:hover": {
-                bgcolor: colors.darkBlue,
-                transform: "translateY(-2px)",
-                boxShadow: "0 4px 12px rgba(102, 197, 189, 0.3)",
-              },
-              borderRadius: 5,
-              px: 4,
-              fontSize: "1.1rem",
-              mr: 7,
-              transition: "all 0.3s ease-in-out",
-            }}
-            >
-            Registre ràpid
-          </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
 

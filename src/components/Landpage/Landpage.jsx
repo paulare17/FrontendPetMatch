@@ -116,6 +116,7 @@ export default function Landpage() {
         </Button>
 
         <Button
+        onClick={()=> navigate('/formulari-dialog')}
           variant="contained"
           sx={{
             bgcolor: colors.orange,

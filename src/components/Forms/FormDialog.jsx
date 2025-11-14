@@ -128,6 +128,28 @@ export default function FormDialog() {
         </DialogContent>
         <DialogActions>
           <Button
+          onClick={()=>navigate('/formulari-protectora')}
+            variant="contained"
+            sx={{
+              bgcolor: colors.yellow,
+              color: colors.black,
+              "&:hover": {
+                bgcolor: colors.purple,
+                transform: "translateY(-2px)",
+                boxShadow: "0 4px 12px rgba(245, 132, 43, 0.3)",
+              },
+              borderRadius: 5,
+              // px: 4,
+              mb: 2,
+              mr: 5.5,
+              fontSize: "0.7rem",
+              transition: "all 0.3s ease-in-out",
+            }}
+            onClick={handleClose}
+          >
+            Sóc una protectora
+          </Button>
+          <Button
             variant="contained"
             sx={{
               bgcolor: colors.orange,

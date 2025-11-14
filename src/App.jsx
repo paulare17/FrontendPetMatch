@@ -8,6 +8,7 @@ import FormRol from "./components/Forms/FormRol";
 import FormDialog from "./components/Forms/FormDialog";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ViewLogin from "./components/Login/ViewLogin";
+import FormProtectora from "./components/Forms/FormProtectora";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -17,14 +18,15 @@ function App() {
       <div
         style={{
           width: "100vw",
-          height: "100vh",
-          overflow: "hidden",
+          minHeight: "100vh",
+          overflow: "auto",
           display: "flex",
           flexDirection: "column",
         }}
       >
         <Navbar />
-        <Routes>
+        <FormProtectora/>
+        {/* <Routes>
           <Route path="/" element={<Landpage />} />
           <Route
             path="/formulari-dialog"
@@ -37,8 +39,8 @@ function App() {
           />
            <Route path="/rol" element={<FormRol />} />
            <Route path="/formulari-acces" element={<ViewLogin />} />
-           {/* <Route path="*" element={<FormDialog />} /> */}
-        </Routes>
+
+        </Routes> */}
       </div>
     </BrowserRouter>
   );
