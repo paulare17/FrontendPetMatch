@@ -31,42 +31,45 @@ import {
   Group,
   VolunteerActivism,
 } from "@mui/icons-material";
-import { colors } from "../../colors.jsx";
+import { colors } from "../../constants/colors.jsx";
 import { useNavigate } from "react-router-dom";
+import {
+  generoOptions,
+  especieOptions,
+  actividadOptions,
+  tamanoOptions,
+  edadOptions,
+  sexoOptions,
+  tipoViviendaOptions,
+} from "../../constants/options";
 
 export default function FormUsuari() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     // Informació bàsica
     telefono: "",
-    data_nacimiento: "",
+    barrio: "",
+    fecha_nacimiento: "",
     descripcion: "",
     foto_perfil: null,
     genero: "",
-    necesidades_esp: false,
+    necesidades_especiales: false,
+    especie: "",
     mascota_previa: false,
     mascota_actual: false,
     casa_acollida: false,
     tipo_vivienda: "",
+    tiene_ninos: false,
+    nivel_actividad_familiar: "",
+    preferencias_tamano: [],
+    preferencias_edad: [],
+    preferencias_sexo: [],
+    deporte_ofrecible: "",
+    tiempo_en_casa_para_gatos: "",
   });
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-
-  const generoOptions = [
-    { value: "M", label: "Masculí" },
-    { value: "F", label: "Femení" },
-    { value: "O", label: "Altres" },
-    { value: "N", label: "Preferisc no dir-ho" },
-  ];
-
-  const tipoViviendaOptions = [
-    { value: "apartamento", label: "Apartamento" },
-    { value: "casa_pequeña", label: "Casa pequeña" },
-    { value: "casa_grande", label: "Casa grande" },
-    { value: "casa_con_jardin", label: "Casa con jardín" },
-    { value: "finca", label: "Finca/Casa rural" },
-  ];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -83,6 +86,15 @@ export default function FormUsuari() {
     }));
   };
 
+  const handleMultiSelectChange = (name, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: prev[name].includes(value)
+        ? prev[name].filter((item) => item !== value)
+        : [...prev[name], value],
+    }));
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setFormData((prev) => ({
@@ -95,8 +107,8 @@ export default function FormUsuari() {
     const newErrors = {};
 
     if (!formData.telefono.trim()) newErrors.telefono = "Telèfon obligatori";
-    if (!formData.data_nacimiento)
-      newErrors.data_nacimiento = "Data de naixement obligatòria";
+    if (!formData.fecha_nacimiento)
+      newErrors.fecha_nacimiento = "Data de naixement obligatòria";
     if (!formData.descripcion.trim())
       newErrors.descripcion = "Descripció obligatòria";
     if (!formData.genero) newErrors.genero = "Gènere obligatori";
@@ -164,7 +176,7 @@ export default function FormUsuari() {
             }}
           >
             <Group />
-            Perfil d'Usuari
+            Perfil de Usuario
           </Typography>
 
           <Typography
@@ -172,7 +184,7 @@ export default function FormUsuari() {
             align="center"
             sx={{ mb: 4, color: "text.secondary", lineHeight: 1.6 }}
           >
-            Completa la informació del teu perfil per poder adoptar mascotes
+            Completa la información de tu perfil para que podamos recomendarte las mejores mascotas para ti.
           </Typography>
 
           <Box component="form" onSubmit={handleSubmit}>
@@ -182,7 +194,7 @@ export default function FormUsuari() {
               sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
             >
               <Group sx={{ mr: 1, verticalAlign: "middle" }} />
-              Informació Personal
+              Información Personal
             </Typography>
 
             <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -210,20 +222,20 @@ export default function FormUsuari() {
                 <TextField
                   required
                   fullWidth
-                  name="data_nacimiento"
-                  label="Data de naixement"
+                  name="fecha_nacimiento"
+                  label="Fecha de nacimiento"
                   type="date"
-                  value={formData.data_nacimiento}
+                  value={formData.fecha_nacimiento}
                   onChange={handleInputChange}
-                  error={!!errors.data_nacimiento}
-                  helperText={errors.data_nacimiento}
+                  error={!!errors.fecha_nacimiento}
+                  helperText={errors.fecha_nacimiento}
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
 
               <Grid size={{ xs: 12, sm: 6 }}>
                 <FormControl fullWidth required error={!!errors.genero}>
-                  <InputLabel>Gènere</InputLabel>
+                  <InputLabel>Género</InputLabel>
                   <Select
                     name="genero"
                     value={formData.genero}
@@ -245,6 +257,24 @@ export default function FormUsuari() {
               </Grid>
 
               <Grid size={{ xs: 12, sm: 6 }}>
+                <FormControl fullWidth sx={{ mt: 1 }}>
+                  <InputLabel>Especie de interés</InputLabel>
+                  <Select
+                    name="especie"
+                    value={formData.especie}
+                    onChange={handleInputChange}
+                    label="Especie de interés"
+                  >
+                    {especieOptions.map((opt) => (
+                      <MenuItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Button
                   variant="outlined"
                   component="label"
@@ -261,7 +291,7 @@ export default function FormUsuari() {
                 >
                   {formData.foto_perfil
                     ? "Foto seleccionada"
-                    : "Pujar foto de perfil"}
+                    : "Subir foto de perfil"}
                   <input
                     type="file"
                     hidden
@@ -278,13 +308,13 @@ export default function FormUsuari() {
                   multiline
                   rows={4}
                   name="descripcion"
-                  label="Descripció personal"
+                  label="Descripción personal"
                   value={formData.descripcion}
                   onChange={handleInputChange}
                   error={!!errors.descripcion}
                   helperText={
                     errors.descripcion ||
-                    "Explica una mica sobre tu, els teus interessos i experiència amb animals"
+                    "Explica un poco sobre ti, tus intereses y experiencia con animales"
                   }
                   InputProps={{
                     startAdornment: (
@@ -299,24 +329,150 @@ export default function FormUsuari() {
 
             <Divider sx={{ my: 3 }} />
 
+            {/* Preferències i Activitat Familiar */}
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
+            >
+              <Schedule sx={{ mr: 1, verticalAlign: "middle" }} />
+              Preferencias de mascota y actividad familiar
+            </Typography>
+
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <FormControl fullWidth>
+                  <InputLabel>Nivel de actividad familiar</InputLabel>
+                  <Select
+                    name="nivel_actividad_familiar"
+                    value={formData.nivel_actividad_familiar}
+                    onChange={handleInputChange}
+                    label="Nivel de actividad familiar"
+                  >
+                    {actividadOptions.map((opt) => (
+                      <MenuItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6 }}>
+                  <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={formData.tiene_ninos}
+                      onChange={() => handleCheckboxChange("tiene_ninos")}
+                      sx={{ color: colors.blue }}
+                    />
+                  }
+                  label="Tengo niños en casa"
+                />
+              </Grid>
+
+              <Grid size={{ xs: 12 }}>
+                <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                  Preferencias de tamaño
+                </Typography>
+                <FormGroup row sx={{ mb: 2 }}>
+                  {tamanoOptions.map((opt) => (
+                    <FormControlLabel
+                      key={opt.value}
+                      control={
+                        <Checkbox
+                          checked={formData.preferencias_tamano.includes(opt.value)}
+                          onChange={() => handleMultiSelectChange("preferencias_tamano", opt.value)}
+                          sx={{ color: colors.blue }}
+                        />
+                      }
+                      label={opt.label}
+                    />
+                  ))}
+                </FormGroup>
+              </Grid>
+
+              <Grid size={{ xs: 12 }}>
+                <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                  Preferencias de edad
+                </Typography>
+                <FormGroup row sx={{ mb: 2 }}>
+                  {edadOptions.map((opt) => (
+                    <FormControlLabel
+                      key={opt.value}
+                      control={
+                        <Checkbox
+                          checked={formData.preferencias_edad.includes(opt.value)}
+                          onChange={() => handleMultiSelectChange("preferencias_edad", opt.value)}
+                          sx={{ color: colors.blue }}
+                        />
+                      }
+                      label={opt.label}
+                    />
+                  ))}
+                </FormGroup>
+              </Grid>
+
+              <Grid size={{ xs: 12 }}>
+                <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                  Preferencias de sexo
+                </Typography>
+                <FormGroup row sx={{ mb: 2 }}>
+                  {sexoOptions.map((opt) => (
+                    <FormControlLabel
+                      key={opt.value}
+                      control={
+                        <Checkbox
+                          checked={formData.preferencias_sexo.includes(opt.value)}
+                          onChange={() => handleMultiSelectChange("preferencias_sexo", opt.value)}
+                          sx={{ color: colors.blue }}
+                        />
+                      }
+                      label={opt.label}
+                    />
+                  ))}
+                </FormGroup>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6 }}>
+                {formData.especie === "perro" && (
+                  <TextField
+                    fullWidth
+                    name="deporte_ofrecible"
+                    label="Deportes/actividades ofrecibles (perros)"
+                    value={formData.deporte_ofrecible}
+                    onChange={handleInputChange}
+                  />
+                )}
+                {formData.especie === "gato" && (
+                  <TextField
+                    fullWidth
+                    name="tiempo_en_casa_para_gatos"
+                    label="Tiempo en casa (útil para gatos)"
+                    value={formData.tiempo_en_casa_para_gatos}
+                    onChange={handleInputChange}
+                  />
+                )}
+              </Grid>
+            </Grid>
+
             {/* Situació de Vivenda */}
             <Typography
               variant="h6"
               sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
             >
               <LocationOn sx={{ mr: 1, verticalAlign: "middle" }} />
-              Situació de Vivenda
+              Situación de Vivienda
             </Typography>
 
             <Grid container spacing={3} sx={{ mb: 4 }}>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <FormControl fullWidth required error={!!errors.tipo_vivienda}>
-                  <InputLabel>Tipus de vivenda</InputLabel>
+                  <InputLabel>Tipo de vivienda</InputLabel>
                   <Select
                     name="tipo_vivienda"
                     value={formData.tipo_vivienda}
                     onChange={handleInputChange}
-                    label="Tipus de vivenda"
+                    label="Tipo de vivienda"
                   >
                     {tipoViviendaOptions.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
@@ -341,7 +497,7 @@ export default function FormUsuari() {
               sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
             >
               <Pets sx={{ mr: 1, verticalAlign: "middle" }} />
-              Experiència amb Animals
+              Experiencia con animales
             </Typography>
 
             <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -354,7 +510,7 @@ export default function FormUsuari() {
                       sx={{ color: colors.blue }}
                     />
                   }
-                  label="He tingut mascotes abans"
+                  label="He tenido mascotas antes"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
@@ -366,7 +522,7 @@ export default function FormUsuari() {
                       sx={{ color: colors.blue }}
                     />
                   }
-                  label="Actualment tinc mascotes"
+                  label="Actualmente tengo mascotas"
                 />
               </Grid>
             </Grid>
@@ -379,7 +535,7 @@ export default function FormUsuari() {
               sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
             >
               <VolunteerActivism sx={{ mr: 1, verticalAlign: "middle" }} />
-              Capacitat d'Involucració
+              Capacidad de implicación
             </Typography>
 
             <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -392,7 +548,7 @@ export default function FormUsuari() {
                       sx={{ color: colors.blue }}
                     />
                   }
-                  label="Tinc els recursos i la capacitat per cuidar animals amb necessitats especials"
+                  label="Tengo los recursos y la capacidad para cuidar animales con necesidades especiales"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
@@ -404,7 +560,7 @@ export default function FormUsuari() {
                       sx={{ color: colors.blue }}
                     />
                   }
-                  label="Puc ser casa d'acollida"
+                  label="Puedo ser casa de acogida"
                 />
               </Grid>
 

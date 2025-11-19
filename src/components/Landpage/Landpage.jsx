@@ -5,7 +5,7 @@ import gatImatgeInfEsq from "../../assets/gat-cantonada.png"; // ✅ Import la i
 import gatImatgeSupDreta from "../../assets/gat-superior.png";
 import gosImatgeCentre from "../../assets/gos-baix.png";
 import './petjades.css'
-import {colors} from '../../colors.jsx'
+import {colors} from '../../constants/colors.jsx'
 import { useNavigate } from "react-router-dom";
 
 
@@ -14,6 +14,7 @@ export default function Landpage() {
   return (
     <Box
       sx={{
+        minHeight: 'calc(100vh - 90px)',
         width: "100%", // Usa 100% en lloc de 100vw
         flex: 1, // Ocupa l'espai restant després de la navbar
         bgcolor: colors.backgroundOrange,
@@ -23,7 +24,7 @@ export default function Landpage() {
         justifyContent: "center", 
         position: "relative", 
         // overflow: "auto", 
-       minHeight: 0, // Permet que el flex item es redueixi
+      //  minHeight: 0, // Permet que el flex item es redueixi
         padding: { xs: 1, sm: 2, md: 3 }, // Menys padding
         gap: { xs: 1, sm: 1.5, md: 2 }, // Menys gap
       }}
@@ -85,7 +86,7 @@ export default function Landpage() {
 
           }}}
         >
-          AdoptApp
+          imPet-U
         </Typography>
       </Box>
 

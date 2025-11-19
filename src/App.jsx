@@ -10,6 +10,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ViewLogin from "./components/Login/ViewLogin";
 import FormProtectora from "./components/Forms/FormProtectora";
 import FormUsuari from "./components/Forms/FormUsuari";
+import AddAnimalForm from "./components/Forms/AddAnimalForm";
+import ProfilePageUser from "./components/pages/ProfilePageUser";
+import ProfilePageProtectora from "./components/pages/ProfilePageProtectora";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -18,10 +21,10 @@ function App() {
     <BrowserRouter>
       <div
         style={{
-          width: "100vw",
+          width: "100%",
           minHeight: "100vh",
-          overflow: "auto",
           display: "flex",
+          overflow: "auto",
           flexDirection: "column",
         }}
       >
@@ -41,6 +44,11 @@ function App() {
            <Route path="/formulari-acces" element={<ViewLogin />} />
            <Route path="/formulari-protectora" element={<FormProtectora/>}/>
            <Route path="/formulari-usuari" element={<FormUsuari/>}/>
+           <Route path="/afegir-animal" element={<AddAnimalForm/>}/>
+           <Route path="/perfil-usuari" element={<ProfilePageUser/>}/>
+           <Route path="/perfil-protectora" element={<ProfilePageProtectora/>}/>
+
+           
         </Routes>
       </div>
     </BrowserRouter>

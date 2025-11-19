@@ -11,7 +11,7 @@ import {
   IconButton
 } from '@mui/material';
 import { Visibility, VisibilityOff, Email, Lock } from '@mui/icons-material';
-import {colors } from '../../colors.jsx';
+import {colors } from '../../constants/colors.jsx';
 import { useNavigate } from "react-router-dom";
 
 
@@ -67,12 +67,11 @@ export default function ViewLogin() {
   return (
     <Box
       sx={{
-        height: '100vh',
+       minHeight: 'calc(100vh - 90px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        // padding: 2,
-        bgcolor: colors.backgroundOrange
+        bgcolor: colors.backgroundOrange,
       }}
     >
       <Card sx={{ maxWidth: 400, width: '100%', borderRadius: 5}}>

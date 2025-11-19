@@ -3,7 +3,7 @@ import PetsIcon from "@mui/icons-material/Pets";
 import { Typography, Box } from "@mui/material";
 import petsImageOrange from "../../assets/paw-orange.svg";
 import petsImageBlue from "../../assets/paw-blue.svg";
-import { colors } from "../../colors.jsx";
+import { colors } from "../../constants/colors.jsx";
 
 export default function EscollirRol() {
   return (

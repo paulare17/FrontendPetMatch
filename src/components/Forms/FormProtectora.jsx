@@ -30,35 +30,64 @@ import {
   ContactPhone,
   Group,
 } from "@mui/icons-material";
-import { colors } from "../../colors.jsx";
+import { colors } from "../../constants/colors.jsx";
 import { useNavigate } from "react-router-dom";
+import { tipusAnimalsOptions, serveisOptions } from "../../constants/options.jsx";
 
 export default function FormProtectora() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     // Informació bàsica
-    nomProtectora: "",
+    nombreProtectora: "",
     email: "",
     telefon: "",
     telefonEmergencia: "",
     webSite: "",
+    cif: "",
+    numRegistroAsociacion: "",
+    tipoEntidadJuridica: "",
 
     // Adreça
     carrer: "",
     ciutat: "",
     codiPostal: "",
     provincia: "Barcelona",
+    // Direcció jurídica
+    direccionJuridica: "",
+    calleJuridica: "",
+    numeroJuridica: "",
+    poblacionJuridica: "",
+    codigoPostalJuridica: "",
+    // Direcció refugi (si cal separar)
+    direccionRefugio: "",
+    calleRefugio: "",
+    numeroRefugio: "",
+    poblacionRefugio: "",
+    codigoPostalRefugio: "",
 
-    // Horaris
-    horariApertura: "",
-    horariTancament: "",
-    diesOberts: [],
+    // Horaris per dia
+    horario_lunes_apertura: "",
+    horario_lunes_cierre: "",
+    horario_martes_apertura: "",
+    horario_martes_cierre: "",
+    horario_miercoles_apertura: "",
+    horario_miercoles_cierre: "",
+    horario_jueves_apertura: "",
+    horario_jueves_cierre: "",
+    horario_viernes_apertura: "",
+    horario_viernes_cierre: "",
+    horario_sabado_apertura: "",
+    horario_sabado_cierre: "",
+    horario_domingo_apertura: "",
+    horario_domingo_cierre: "",
 
     // Informació específica
     tipusAnimals: [],
     capacitatMaxima: "",
     anyFundacio: "",
     nucleoZoologico: "",
+    ambitoGeografico: "",
+    tipo_animal: "",
 
     // Descripció i serveis
     descripcio: "",
@@ -77,26 +106,7 @@ export default function FormProtectora() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const dies = [
-    "Dilluns",
-    "Dimarts",
-    "Dimecres",
-    "Dijous",
-    "Divendres",
-    "Dissabte",
-    "Diumenge",
-  ];
-  const provincies = ["Barcelona", "Girona", "Lleida", "Tarragona"];
-  const tipusAnimalsOptions = ["Gats", "Gossos", "Altres"];
-  const serveisOptions = [
-    "Adopció",
-    "Acollida temporal",
-    "Veterinari",
-    "Educació",
-    "Rehabilitació",
-    "Transport",
-    "Castració/Esterilització",
-  ];
+  // tipusAnimalsOptions and serveisOptions are imported from shared constants
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -118,8 +128,8 @@ export default function FormProtectora() {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.nomProtectora.trim())
-      newErrors.nomProtectora = "Nom de la protectora obligatori";
+    if (!formData.nombreProtectora.trim())
+      newErrors.nombreProtectora = "Nom de la protectora obligatori";
     if (!formData.email.trim()) newErrors.email = "Email obligatori";
     if (!/\S+@\S+\.\S+/.test(formData.email))
       newErrors.email = "Format d'email invàlid";
@@ -221,12 +231,12 @@ export default function FormProtectora() {
                 <TextField
                   required
                   fullWidth
-                  name="nomProtectora"
+                  name="nombreProtectora"
                   label="Nom de la Protectora"
-                  value={formData.nomProtectora}
+                  value={formData.nombreProtectora}
                   onChange={handleInputChange}
-                  error={!!errors.nomProtectora}
-                  helperText={errors.nomProtectora}
+                  error={!!errors.nombreProtectora}
+                  helperText={errors.nombreProtectora}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -281,6 +291,41 @@ export default function FormProtectora() {
               <Grid size={{ xs: 12, sm: 3 }}>
                 <TextField
                   fullWidth
+                  name="cif"
+                  label="CIF"
+                  value={formData.cif}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 3 }}>
+                <TextField
+                  fullWidth
+                  name="numRegistroAsociacion"
+                  label="Núm. registre associació"
+                  value={formData.numRegistroAsociacion}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 3 }}>
+                <FormControl fullWidth>
+                  <InputLabel>Tipus entitat</InputLabel>
+                  <Select
+                    name="tipoEntidadJuridica"
+                    value={formData.tipoEntidadJuridica}
+                    onChange={handleInputChange}
+                    label="Tipus entitat"
+                  >
+                    <MenuItem value="asociacion">Asociación</MenuItem>
+                    <MenuItem value="fundacion">Fundación</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 3 }}>
+                <TextField
+                  fullWidth
                   name="telefonEmergencia"
                   label="Telèfon d'emergència"
                   value={formData.telefonEmergencia}
@@ -325,6 +370,16 @@ export default function FormProtectora() {
             </Typography>
 
             <Grid container spacing={3} sx={{ mb: 4 }}>
+              <Grid size={{ xs: 12 }}>
+                <TextField
+                  fullWidth
+                  multiline
+                  name="direccionJuridica"
+                  label="Direcció jurídica (adreça completa)"
+                  value={formData.direccionJuridica}
+                  onChange={handleInputChange}
+                />
+              </Grid>
               <Grid size={{ xs: 12, sm: 3 }}>
                 <TextField
                   required
@@ -364,80 +419,122 @@ export default function FormProtectora() {
                 />
               </Grid>
 
+            
+            </Grid>
+
+            <Divider sx={{ my: 3 }} />
+
+            {/* Direcció Refugi */}
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
+            >
+              <LocationOn sx={{ mr: 1, verticalAlign: "middle" }} />
+              Direcció Refugi
+            </Typography>
+
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+              <Grid size={{ xs: 12 }}>
+                <TextField
+                  fullWidth
+                  multiline
+                  name="direccionRefugio"
+                  label="Direcció del refugi (adreça completa)"
+                  value={formData.direccionRefugio}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 4 }}>
+                <TextField
+                  fullWidth
+                  name="calleRefugio"
+                  label="Carrer refugi"
+                  value={formData.calleRefugio}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 2 }}>
+                <TextField
+                  fullWidth
+                  name="numeroRefugio"
+                  label="Número"
+                  value={formData.numeroRefugio}
+                  onChange={handleInputChange}
+                />
+              </Grid>
               <Grid size={{ xs: 12, sm: 3 }}>
-                <FormControl fullWidth>
-                  <InputLabel>Província</InputLabel>
-                  <Select
-                    name="provincia"
-                    value={formData.provincia}
-                    onChange={handleInputChange}
-                    label="Província"
-                  >
-                    {provincies.map((provincia) => (
-                      <MenuItem key={provincia} value={provincia}>
-                        {provincia}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <TextField
+                  fullWidth
+                  name="poblacionRefugio"
+                  label="Població refugi"
+                  value={formData.poblacionRefugio}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 3 }}>
+                <TextField
+                  fullWidth
+                  name="codigoPostalRefugio"
+                  label="Codi postal refugi"
+                  value={formData.codigoPostalRefugio}
+                  onChange={handleInputChange}
+                />
               </Grid>
             </Grid>
 
             <Divider sx={{ my: 3 }} />
 
-            {/* Horaris */}
+
+            {/* Horaris per dia */}
             <Typography
               variant="h6"
               sx={{ mb: 2, color: colors.blue, fontWeight: "bold" }}
             >
               <Schedule sx={{ mr: 1, verticalAlign: "middle" }} />
-              Horaris d'Atenció
+              Horaris per dia
             </Typography>
+      
+            {(() => {
+              const diesSetmana = [
+                { label: "Dilluns", apertura: "horario_lunes_apertura", cierre: "horario_lunes_cierre" },
+                { label: "Dimarts", apertura: "horario_martes_apertura", cierre: "horario_martes_cierre" },
+                { label: "Dimecres", apertura: "horario_miercoles_apertura", cierre: "horario_miercoles_cierre" },
+                { label: "Dijous", apertura: "horario_jueves_apertura", cierre: "horario_jueves_cierre" },
+                { label: "Divendres", apertura: "horario_viernes_apertura", cierre: "horario_viernes_cierre" },
+                { label: "Dissabte", apertura: "horario_sabado_apertura", cierre: "horario_sabado_cierre" },
+                { label: "Diumenge", apertura: "horario_domingo_apertura", cierre: "horario_domingo_cierre" },
+              ];
+              return (
+                <Grid container spacing={2} sx={{ mb: 3 }}>
+                  {diesSetmana.map((dia) => (
+                    <Grid item xs={12} sm={6} md={3} key={dia.label}>
+                      <Typography variant="subtitle2" sx ={{mb: 1}}>{dia.label}</Typography>
+                      <TextField
+                        fullWidth
+                        name={dia.apertura}
+                        label="Apertura"
+                        type="time"
+                        value={formData[dia.apertura]}
+                        onChange={handleInputChange}
+                        InputLabelProps={{ shrink: true }}
+                        sx={{ mb: 2 }}
+                      />
+                      <TextField
+                        fullWidth
+                        name={dia.cierre}
+                        label="Tancament"
+                        type="time"
+                        value={formData[dia.cierre]}
+                        onChange={handleInputChange}
+                        InputLabelProps={{ shrink: true }}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              );
+            })()}
 
-            <Grid container spacing={3} sx={{ mb: 3 }}>
-              <Grid size={{ xs: 12, sm: 3 }}>
-                <TextField
-                  fullWidth
-                  name="horariApertura"
-                  label="Hora d'obertura"
-                  type="time"
-                  value={formData.horariApertura}
-                  onChange={handleInputChange}
-                  InputLabelProps={{ shrink: true }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, sm: 3 }}>
-                <TextField
-                  fullWidth
-                  name="horariTancament"
-                  label="Hora de tancament"
-                  type="time"
-                  value={formData.horariTancament}
-                  onChange={handleInputChange}
-                  InputLabelProps={{ shrink: true }}
-                />
-              </Grid>
-            </Grid>
-
-            <Typography variant="body2" sx={{ mb: 2, color: colors.blue }}>
-              Dies oberts:
-            </Typography>
-            <FormGroup row sx={{ mb: 4 }}>
-              {dies.map((dia) => (
-                <FormControlLabel
-                  key={dia}
-                  control={
-                    <Checkbox
-                      checked={formData.diesOberts.includes(dia)}
-                      onChange={() => handleCheckboxChange("diesOberts", dia)}
-                      sx={{ color: colors.blue }}
-                    />
-                  }
-                  label={dia}
-                />
-              ))}
-            </FormGroup>
 
             <Divider sx={{ my: 3 }} />
 
@@ -454,19 +551,19 @@ export default function FormProtectora() {
               Tipus d'animals que acolliu: *
             </Typography>
             <FormGroup row sx={{ mb: 3 }}>
-              {tipusAnimalsOptions.map((tipus) => (
+              {tipusAnimalsOptions.map((opt) => (
                 <FormControlLabel
-                  key={tipus}
+                  key={opt.value}
                   control={
                     <Checkbox
-                      checked={formData.tipusAnimals.includes(tipus)}
+                      checked={formData.tipusAnimals.includes(opt.value)}
                       onChange={() =>
-                        handleCheckboxChange("tipusAnimals", tipus)
+                        handleCheckboxChange("tipusAnimals", opt.value)
                       }
                       sx={{ color: colors.blue }}
                     />
                   }
-                  label={tipus}
+                  label={opt.label}
                 />
               ))}
             </FormGroup>
@@ -488,6 +585,31 @@ export default function FormProtectora() {
                   label="Capacitat màxima d'animals"
                   type="number"
                   value={formData.capacitatMaxima}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 4 }}>
+                <FormControl fullWidth>
+                  <InputLabel>Tipus d'animal</InputLabel>
+                  <Select
+                    name="tipo_animal"
+                    value={formData.tipo_animal || ""}
+                    onChange={handleInputChange}
+                    label="Tipus d'animal"
+                  >
+                    <MenuItem value="perro">Perro</MenuItem>
+                    <MenuItem value="gato">Gato</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 4 }}>
+                <TextField
+                  fullWidth
+                  name="ambitoGeografico"
+                  label="Àmbit geogràfic"
+                  value={formData.ambitoGeografico}
                   onChange={handleInputChange}
                 />
               </Grid>
@@ -546,19 +668,19 @@ export default function FormProtectora() {
               Serveis que oferiu:
             </Typography>
             <FormGroup row sx={{ mb: 4 }}>
-              {serveisOptions.map((servei) => (
+              {serveisOptions.map((opt) => (
                 <FormControlLabel
-                  key={servei}
+                  key={opt.value}
                   control={
                     <Checkbox
-                      checked={formData.serveisOferts.includes(servei)}
+                      checked={formData.serveisOferts.includes(opt.value)}
                       onChange={() =>
-                        handleCheckboxChange("serveisOferts", servei)
+                        handleCheckboxChange("serveisOferts", opt.value)
                       }
                       sx={{ color: colors.blue }}
                     />
                   }
-                  label={servei}
+                  label={opt.label}
                 />
               ))}
             </FormGroup>
